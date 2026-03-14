@@ -1,460 +1,284 @@
-# 📋 Phân Công Công Việc - Team TMDT G4
+# Phan Cong Cong Viec - Team TMDT G4 (8 Thanh Vien)
 
-**Quy Mô**: 5 Thành Viên (3 Backend + 2 Frontend)  
-**Mô Hình**: Song Song (Parallel Development)  
-**Duration**: 4 Tuần (mỗi tuần = 1 module)
-
----
-
-## 🎯 Chiến Lược Phân Công
-
-### Nguyên Tắc Chính
-1. **Độc Lập**: Mỗi thành viên làm trên module riêng, không chặn nhau
-2. **API Contract**: Tất cả dùng chung API contract (interface) từ đầu
-3. **Mock Data**: Nếu API chưa sẵn, dùng mock data để phát triển UI
-4. **Parallel**: Các tasks hoạt động song song, không cần chờ
+Quy mo: 8 thanh vien (4 Backend + 4 Frontend)  
+Mo hinh: Song song, chia theo module doc lap  
+Duration: 4 tuan
 
 ---
 
-## 👥 Phân Công Chi Tiết
+## Muc Tieu Phan Cong
 
-### **BACKEND DEVELOPERS (3 người)**
-
----
-
-#### **BE1: Nguyễn Văn A - Authentication & User Management**
-
-**Phạm Vi Trách Nhiệm:**
-- Quản lý người dùng (User Management)
-- Đăng ký / Đăng nhập / Đăng xuất
-- JWT Token & Authorization
-- User Profile Management
-- Password Reset
-
-**Technical Stack:**
-- Framework: Express.js
-- Database: MongoDB
-- Authentication: JWT + bcrypt
-- Validation: Joi/Yup
-
-**Deliverables:**
-```
-backend/src/
-├── models/User.js                 # User Schema
-├── repositories/UserRepository.js # User CRUD
-├── services/AuthService.js        # Auth Logic (Interface + Implementation)
-├── controllers/AuthController.js  # Auth Endpoints
-├── routes/authRoutes.js           # Router Setup
-├── middleware/authMiddleware.js   # JWT Verification
-└── config/auth.config.js          # JWT Config
-```
-
-**API Endpoints to Create:**
-```
-POST   /api/auth/register           # Register
-POST   /api/auth/login              # Login
-POST   /api/auth/logout             # Logout
-GET    /api/auth/me                 # Get Current User
-PUT    /api/users/:id               # Update Profile
-GET    /api/users                   # Get All Users (Admin)
-```
-
-**Dependencies:** NONE (độc lập)  
-**Estimated Time:** 1 Week  
-**Status:** Ready to Start
+1. Moi thanh vien co khoi luong tuong duong, co dau ra ro rang.
+2. Han che phu thuoc cheo de team code song song.
+3. Frontend duoc phep dung mock data neu backend chua xong.
+4. Moi module deu co owner chinh va owner backup.
 
 ---
 
-#### **BE2: Trần Thị B - Product Management & Search/Filter/Sort**
+## Co Cau Team
 
-**Phạm Vi Trách Nhiệm:**
-- Quản lý sản phẩm (Product CRUD)
-- Lọc sản phẩm (Filter by category, price, status)
-- Tìm kiếm sản phẩm (Search by name/keyword)
-- Sắp xếp sản phẩm (Sort by price, date, popularity)
-- Hiển thị ảnh sản phẩm
-- Quản lý danh mục sản phẩm
+Backend:
+1. BE1 - Auth + User
+2. BE2 - Product + Category + Search/Filter/Sort
+3. BE3 - Cart + Checkout + Order
+4. BE4 - Review + Promotion + DB Optimization + Logging
 
-**Technical Stack:**
-- Framework: Express.js
-- Database: MongoDB
-- Search: MongoDB Aggregation / Elasticsearch (optional)
-- File Upload: Multer (for product images)
-
-**Deliverables:**
-```
-backend/src/
-├── models/Product.js                   # Product Schema
-├── models/Category.js                  # Category Schema
-├── repositories/ProductRepository.js   # Product CRUD + Query
-├── services/ProductService.js          # Product Logic
-├── controllers/ProductController.js    # Product Endpoints
-├── routes/productRoutes.js             # Router
-├── middleware/fileUpload.js            # File Upload Middleware
-└── utils/searchUtils.js                # Search Helper Functions
-```
-
-**API Endpoints to Create:**
-```
-GET    /api/products                    # Get All (with filter/sort)
-GET    /api/products/:id                # Get By ID
-POST   /api/products                    # Create (Admin)
-PUT    /api/products/:id                # Update (Admin)
-DELETE /api/products/:id                # Delete (Admin)
-GET    /api/categories                  # Get Categories
-POST   /api/products/search             # Search Products
-```
-
-**Query Parameters Support:**
-```
-/api/products?category=electronics&priceMin=100&priceMax=1000&sort=-price&search=phone
-```
-
-**Dependencies:** NONE (độc lập)  
-**Estimated Time:** 1 Week  
-**Status:** Ready to Start
+Frontend:
+1. FE1 - Layout System + Home + Navigation
+2. FE2 - Product List + Search + Filter + Sort UI
+3. FE3 - Product Detail + Review UI + Related Products
+4. FE4 - Auth UI + Cart + Checkout + Order History
 
 ---
 
-#### **BE3: Lê Minh C - Cart, Order, Review & Checkout**
+## Phan Cong Chi Tiet Backend (4 Nguoi)
 
-**Phạm Vi Trách Nhiệm:**
-- Quản lý giỏ hàng (Cart Management)
-- Thanh toán / Tạo đơn hàng (Checkout)
-- Quản lý đơn hàng (Order Management)
-- Đánh giá sản phẩm (Product Reviews)
-- Bình luận sản phẩm (Product Comments)
-- Khuyến mại / Giá cũ - giá mới
+### BE1 - Authentication va User Management
 
-**Technical Stack:**
-- Framework: Express.js
-- Database: MongoDB
-- Payment: PayPal/Stripe API (integration)
+Pham vi:
+1. Dang ky, dang nhap, dang xuat, refresh token.
+2. Profile user, cap nhat thong tin, doi mat khau.
+3. Middleware auth va phan quyen user/admin.
 
-**Deliverables:**
-```
-backend/src/
-├── models/Cart.js                   # Cart Schema (Session-based or User-based)
-├── models/Order.js                  # Order Schema
-├── models/Review.js                 # Review Schema
-├── models/Promotion.js              # Promotion/Discount Schema
-├── repositories/CartRepository.js   # Cart CRUD
-├── repositories/OrderRepository.js  # Order CRUD
-├── repositories/ReviewRepository.js # Review CRUD
-├── services/CartService.js          # Cart Logic
-├── services/OrderService.js         # Order Logic (Checkout, Calculate Total)
-├── services/ReviewService.js        # Review Logic
-├── services/PromotionService.js     # Promotion Logic
-├── controllers/CartController.js    # Cart Endpoints
-├── controllers/OrderController.js   # Order Endpoints
-├── controllers/ReviewController.js  # Review Endpoints
-├── routes/cartRoutes.js
-├── routes/orderRoutes.js
-└── routes/reviewRoutes.js
-```
+Deliverables:
+1. `backend/src/repositories/UserRepository.js`
+2. `backend/src/services/AuthService.js`
+3. `backend/src/controllers/AuthController.js`
+4. Hoan thien `backend/src/routes/authRoutes.js`
+5. Cap nhat `backend/src/middleware/authMiddleware.js` neu can
 
-**API Endpoints to Create:**
-```
-# Cart
-POST   /api/cart                     # Add to Cart
-GET    /api/cart                     # Get Cart
-PUT    /api/cart/:itemId             # Update Cart Item
-DELETE /api/cart/:itemId             # Remove from Cart
-DELETE /api/cart                     # Clear Cart
+API phu trach:
+1. `POST /api/auth/register`
+2. `POST /api/auth/login`
+3. `POST /api/auth/logout`
+4. `GET /api/auth/me`
+5. `PUT /api/users/:id`
+6. `GET /api/users`
 
-# Order
-POST   /api/orders                   # Create Order (Checkout)
-GET    /api/orders                   # Get User Orders
-GET    /api/orders/:id               # Get Order Details
-PUT    /api/orders/:id               # Update Order Status (Admin)
+Khoi luong du kien: 20 point
 
-# Review
-POST   /api/products/:id/reviews     # Add Review
-GET    /api/products/:id/reviews     # Get Reviews
-DELETE /api/reviews/:id              # Delete Review
-```
+### BE2 - Product, Category, Search va Sort
 
-**Dependencies:** BE1 (Auth), BE2 (Products) - nhưng có thể mock  
-**Estimated Time:** 1.5 Week  
-**Status:** Ready to Start (mock BE1 & BE2 initially)
+Pham vi:
+1. CRUD san pham va danh muc.
+2. Tim kiem theo tu khoa.
+3. Loc theo gia, danh muc, khuyen mai.
+4. Sap xep theo gia, moi nhat, pho bien.
 
----
+Deliverables:
+1. `backend/src/repositories/ProductRepository.js`
+2. `backend/src/repositories/CategoryRepository.js`
+3. `backend/src/services/ProductService.js`
+4. `backend/src/controllers/ProductController.js`
+5. Hoan thien `backend/src/routes/productRoutes.js`
 
-### **FRONTEND DEVELOPERS (2 người)**
+API phu trach:
+1. `GET /api/products`
+2. `GET /api/products/:id`
+3. `POST /api/products`
+4. `PUT /api/products/:id`
+5. `DELETE /api/products/:id`
+6. `GET /api/categories`
+7. `POST /api/products/search`
 
----
+Khoi luong du kien: 20 point
 
-#### **FE1: Phạm Thu D - Layout, Navigation & Product Listing**
+### BE3 - Cart, Checkout va Order Flow
 
-**Phạm Vi Trách Nhiệm:**
-- Tạo Layout chính (Header, Sidebar, Footer)
-- Navigation Menu
-- HomePage
-- Product List Page
-- Filter & Search UI
-- Sort Controls
-- Responsive Design (Mobile/Tablet/Desktop)
-- Global Styles, Theme
+Pham vi:
+1. Them, sua, xoa san pham trong gio hang.
+2. Checkout va tao don hang.
+3. Theo doi trang thai don hang.
+4. Lich su mua hang cua user.
 
-**Technical Stack:**
-- Framework: React 18 + Vite
-- Styling: Tailwind CSS / CSS Modules
-- State Management: Context API / Zustand (lightweight)
-- HTTP Client: Axios
+Deliverables:
+1. `backend/src/repositories/CartRepository.js`
+2. `backend/src/repositories/OrderRepository.js`
+3. `backend/src/services/CartService.js`
+4. `backend/src/services/OrderService.js`
+5. `backend/src/controllers/CartController.js`
+6. `backend/src/controllers/OrderController.js`
+7. Hoan thien `backend/src/routes/cartRoutes.js`
+8. Hoan thien `backend/src/routes/orderRoutes.js`
 
-**Deliverables:**
-```
-frontend/src/
-├── components/
-│   ├── Layout/
-│   │   ├── Header.jsx
-│   │   ├── Sidebar.jsx
-│   │   ├── Footer.jsx
-│   │   └── MainLayout.jsx
-│   ├── Navigation/
-│   │   ├── NavMenu.jsx
-│   │   └── Breadcrumb.jsx
-│   ├── ProductCard.jsx
-│   ├── FilterBar.jsx              # Category, Price Range Filter
-│   └── SortDropdown.jsx
-├── pages/
-│   ├── HomePage.jsx
-│   ├── ProductListPage.jsx
-│   └── NotFoundPage.jsx
-├── services/
-│   └── productService.js         # API calls (mock initially)
-├── context/
-│   └── ProductContext.js          # Shared state for filters
-├── styles/
-│   ├── globals.css
-│   ├── variables.css
-│   └── responsive.css
-└── utils/
-    └── constants.js               # Constants, URLs
-```
+API phu trach:
+1. `GET /api/cart`
+2. `POST /api/cart`
+3. `PUT /api/cart/:itemId`
+4. `DELETE /api/cart/:itemId`
+5. `DELETE /api/cart`
+6. `POST /api/orders`
+7. `GET /api/orders`
+8. `GET /api/orders/:id`
+9. `PUT /api/orders/:id`
 
-**UI Pages to Build:**
-1. **HomePage** - Product showcase, featured products
-2. **ProductListPage** - List with filter/sort
-3. **Header/Navigation** - Logo, search, menu
-4. **Footer** - Links, info
+Khoi luong du kien: 20 point
 
-**Mock API Integration:**
-- Use mock data (JSON) for products initially
-- Replace with real API when BE2 is ready
+### BE4 - Review, Promotion va Database Reliability
 
-**Dependencies:** NONE (độc lập, sử dụng mock data)  
-**Estimated Time:** 1 Week  
-**Status:** Ready to Start
+Pham vi:
+1. CRUD danh gia, comment san pham.
+2. Logic khuyen mai, gia cu, gia moi, phan tram giam.
+3. Tinh index MongoDB va toi uu query.
+4. Logging, error trace, hardening cho production.
+
+Deliverables:
+1. `backend/src/repositories/ReviewRepository.js`
+2. `backend/src/repositories/PromotionRepository.js`
+3. `backend/src/services/ReviewService.js`
+4. `backend/src/services/PromotionService.js`
+5. `backend/src/controllers/ReviewController.js`
+6. `backend/src/routes/reviewRoutes.js`
+7. `backend/src/config/dbIndexes.js` (moi)
+8. `backend/src/middleware/requestLogger.js` (moi)
+
+API phu trach:
+1. `POST /api/products/:id/reviews`
+2. `GET /api/products/:id/reviews`
+3. `PUT /api/reviews/:id`
+4. `DELETE /api/reviews/:id`
+5. `GET /api/promotions`
+6. `POST /api/promotions`
+7. `PUT /api/promotions/:id`
+8. `DELETE /api/promotions/:id`
+
+Khoi luong du kien: 20 point
 
 ---
 
-#### **FE2: Võ Quốc E - Product Detail, Cart, Checkout & Auth Pages**
+## Phan Cong Chi Tiet Frontend (4 Nguoi)
 
-**Phạm Vi Trách Nhiệm:**
-- Product Detail Page
-- Shopping Cart Page
-- Checkout Process (multi-step form)
-- Order Confirmation
-- Login / Register Pages
-- User Profile Page
-- Product Reviews & Comments Display
-- Promotion Display (old price, discount %)
-- Google Maps Integration (Contact page)
-- Policies Pages (Return, Warranty, Shipping)
+### FE1 - Layout System va Trang Chu
 
-**Technical Stack:**
-- Framework: React 18 + Vite
-- Styling: Tailwind CSS / CSS Modules
-- State Management: Context API / Zustand
-- Form Handling: React Hook Form / Formik
-- Maps: Google Maps API
-- HTTP Client: Axios
+Pham vi:
+1. Header, footer, navigation, main layout.
+2. Home page sections, banner, featured products.
+3. Responsive shell cho mobile/tablet/desktop.
 
-**Deliverables:**
-```
-frontend/src/
-├── pages/
-│   ├── Auth/
-│   │   ├── LoginPage.jsx
-│   │   ├── RegisterPage.jsx
-│   │   └── ForgotPasswordPage.jsx
-│   ├── ProductDetailPage.jsx
-│   ├── CartPage.jsx
-│   ├── CheckoutPage.jsx
-│   ├── OrderConfirmationPage.jsx
-│   ├── UserProfilePage.jsx
-│   ├── ContactPage.jsx              # With Google Maps
-│   ├── ReviewPage.jsx               # Product reviews display
-│   └── PoliciesPage.jsx
-├── components/
-│   ├── Auth/
-│   │   ├── LoginForm.jsx
-│   │   └── RegisterForm.jsx
-│   ├── ProductDetail/
-│   │   ├── ProductImages.jsx
-│   │   ├── ProductInfo.jsx
-│   │   ├── ReviewSection.jsx
-│   │   └── RelatedProducts.jsx
-│   ├── Cart/
-│   │   ├── CartItem.jsx
-│   │   ├── CartSummary.jsx
-│   │   └── EmptyCart.jsx
-│   ├── CheckoutForm/
-│   │   ├── ShippingForm.jsx
-│   │   ├── PaymentForm.jsx
-│   │   └── OrderReview.jsx
-│   ├── Maps/
-│   │   └── GoogleMapComponent.jsx
-│   └── ReviewForm.jsx
-├── services/
-│   ├── authService.js              # Auth API calls
-│   ├── orderService.js             # Order API calls
-│   ├── reviewService.js            # Review API calls
-│   └── cartService.js              # Cart API calls
-├── context/
-│   ├── AuthContext.js              # User auth state
-│   ├── CartContext.js              # Cart state
-│   └── CheckoutContext.js          # Checkout state
-└── hooks/
-    ├── useAuth.js
-    ├── useCart.js
-    └── useCheckout.js
-```
+Deliverables:
+1. `frontend/src/components/Layout/Header.jsx`
+2. `frontend/src/components/Layout/Footer.jsx`
+3. `frontend/src/components/Layout/MainLayout.jsx` (hoan thien)
+4. `frontend/src/pages/HomePage.jsx` (hoan thien)
+5. `frontend/src/components/common/Loading.jsx`
 
-**Pages to Build:**
-1. **LoginPage** - Login form
-2. **RegisterPage** - Signup form
-3. **ProductDetailPage** - Product info, images, reviews
-4. **CartPage** - Shopping cart items
-5. **CheckoutPage** - Multi-step form (shipping, payment)
-6. **OrderConfirmationPage** - Order success page
-7. **ContactPage** - Google Maps + Contact form
-8. **PoliciesPage** - Return, warranty, shipping policies
+Khoi luong du kien: 20 point
 
-**Mock API Integration:**
-- Initial mock data for auth, products, orders
-- Replace with real API when backend is ready
+### FE2 - Product Listing Experience
 
-**Dependencies:** BE1 (Auth), BE2 (Products), BE3 (Cart/Order)  
-**Workaround:** Mock data until backends are ready  
-**Estimated Time:** 1.5 Week  
-**Status:** Ready to Start (with mocks)
+Pham vi:
+1. Product list page.
+2. Search bar, filter bar, sort dropdown.
+3. Pagination va empty states.
+
+Deliverables:
+1. `frontend/src/pages/ProductListPage.jsx` (hoan thien)
+2. `frontend/src/components/ProductCard.jsx`
+3. `frontend/src/components/FilterBar.jsx`
+4. `frontend/src/components/SortDropdown.jsx`
+5. `frontend/src/services/productService.js`
+
+Khoi luong du kien: 20 point
+
+### FE3 - Product Detail va Review Experience
+
+Pham vi:
+1. Product detail page.
+2. Image gallery, product info, related products.
+3. Danh sach review va review form.
+
+Deliverables:
+1. `frontend/src/pages/ProductDetailPage.jsx` (hoan thien)
+2. `frontend/src/components/ProductDetail/ProductImages.jsx`
+3. `frontend/src/components/ProductDetail/ProductInfo.jsx`
+4. `frontend/src/components/ProductDetail/ReviewSection.jsx`
+5. `frontend/src/services/reviewService.js`
+
+Khoi luong du kien: 20 point
+
+### FE4 - Auth, Cart, Checkout, Order History
+
+Pham vi:
+1. Login, register, profile.
+2. Cart page va checkout flow.
+3. Order confirmation va order history.
+
+Deliverables:
+1. `frontend/src/pages/Auth/LoginPage.jsx` (hoan thien)
+2. `frontend/src/pages/Auth/RegisterPage.jsx` (hoan thien)
+3. `frontend/src/pages/CartPage.jsx` (hoan thien)
+4. `frontend/src/pages/CheckoutPage.jsx` (hoan thien)
+5. `frontend/src/pages/OrderHistoryPage.jsx` (moi)
+6. `frontend/src/services/authService.js`
+7. `frontend/src/services/cartService.js`
+8. `frontend/src/services/orderService.js`
+
+Khoi luong du kien: 20 point
 
 ---
 
-## 📅 Timeline
+## Integration Contract Theo Tuan
 
-### Week 1
-- **BE1**: Auth system fully implemented
-- **BE2**: Product CRUD + Search/Filter/Sort implemented
-- **FE1**: Layout, HomePage, ProductListPage with mocks
-- **FE2**: Auth pages, ProductDetailPage (with mocks)
+### Tuan 1
+1. BE1, BE2 chot API schema va response format.
+2. FE1, FE2 dung mock data de build UI.
+3. BE3, BE4 khoi tao service/repository skeleton.
+4. FE3, FE4 dung routes va page skeleton.
 
-### Week 2
-- **BE3**: Cart + Order system implemented
-- **FE1**: Integration with real BE2 API
-- **FE2**: Cart & Checkout pages, real auth integration
+### Tuan 2
+1. BE1, BE2 release API version v1.
+2. FE2, FE3 bat dau ket noi API that.
+3. BE3 complete cart va order core.
+4. FE4 ket noi auth va cart flow.
 
-### Week 3
-- **BE3**: Reviews, Promotions fully working
-- **FE2**: Order confirmation, Contact page with Maps
-- **FE1**: Refinement, responsive testing
+### Tuan 3
+1. BE4 release review va promotion APIs.
+2. FE3 hoan tat review UX, FE4 hoan tat checkout.
+3. FE1 polish responsive toan bo app.
+4. Test integration chuc nang end-to-end.
 
-### Week 4
-- **Admin Dashboard** (if needed)
-- Testing & Bug Fixes
-- Deployment prep
-
----
-
-## 🔗 Integration Points (API Contract)
-
-### User Service (BE1)
-```javascript
-// Public endpoints (no auth required)
-POST /api/auth/register       // { email, password, name } → { user, token }
-POST /api/auth/login          // { email, password } → { user, token }
-GET  /api/auth/me             // (require token) → { user }
-POST /api/auth/logout         // (require token) → { success }
-
-// Protected endpoints (require token)
-PUT  /api/users/:id           // { name, phone, address } → { user }
-GET  /api/users               // (admin only) → { users[] }
-```
-
-### Product Service (BE2)
-```javascript
-// Public endpoints
-GET  /api/products                    // query: ?search=&category=&sort=-price
-GET  /api/products/:id                // → { product, reviews[] }
-GET  /api/categories                  // → { categories[] }
-
-// Admin endpoints (require admin role)
-POST /api/products                    // { name, price, description, images, category }
-PUT  /api/products/:id                // { ...update fields }
-DELETE /api/products/:id              // → { success }
-```
-
-### Cart & Order Service (BE3)
-```javascript
-// User cart (require token)
-GET  /api/cart                        // → { items[], total }
-POST /api/cart                        // { productId, quantity } → { items[] }
-PUT  /api/cart/:itemId                // { quantity } → { items[] }
-DELETE /api/cart/:itemId              // → { items[] }
-
-// Orders (require token)
-POST /api/orders                      // { shippingInfo, paymentInfo } → { order }
-GET  /api/orders                      // → { orders[] }
-GET  /api/orders/:id                  // → { order }
-
-// Reviews (require token)
-POST /api/products/:id/reviews        // { rating, comment } → { review }
-GET  /api/products/:id/reviews        // → { reviews[] }
-```
+### Tuan 4
+1. Regression test, bugfix, performance tuning.
+2. Chot docs, demo script, deployment checklist.
+3. Hardening auth, input validation, error handling.
+4. UAT va nghiem thu noi bo.
 
 ---
 
-## ✅ Checklist: Ready to Start
+## Rule De Bao Dam Khoi Luong Deu
 
-- [ ] Backend env setup (Node + Express + MongoDB)
-- [ ] Frontend env setup (React + Vite)
-- [ ] Database schema finalized
-- [ ] API contract reviewed & approved
-- [ ] Mock data created
-- [ ] Git repository setup with feature branches
-- [ ] Code style guide agreed (ESLint, Prettier)
-- [ ] Communication channel (Slack/Teams)
+1. Moi thanh vien co 20 point base + 2 point support code review.
+2. Moi nguoi phai review it nhat 2 pull request/tuan.
+3. Khong dồn bugfix cho 1 nguoi, chia theo owner module.
+4. Neu task vuot 20 point, tach task va chuyen 1 phan cho backup owner.
 
 ---
 
-## 🚀 Getting Started
+## Branch va Commit Convention
 
-**Each developer should:**
-
-1. Create a feature branch: `git checkout -b feature/BE1-auth` (or BE2, BE3, FE1, FE2)
-2. Follow the deliverables structure
-3. Implement interfaces/contracts first
-4. Create mock data where dependencies exist
-5. Test endpoints/components locally
-6. Create Pull Request when done
+1. Branch: `feature/be1-auth`, `feature/fe3-product-detail`.
+2. Commit: `feat(auth): implement login endpoint`.
+3. Pull request can co:
+   - Mo ta thay doi
+   - Danh sach API/UI da test
+   - Anh/chup man hinh neu la FE
 
 ---
 
-## 📞 Communication
+## Checklist Khoi Dong
 
-- **Daily Standup**: 30 mins (morning)
-- **Integration Meeting**: Every 2 days
-- **Code Reviews**: Before merging PRs
-- **Issue Tracking**: GitHub Issues / Jira
+1. Da setup `.env` backend va frontend.
+2. Da chay duoc `npm install` cho 2 app.
+3. Da thong nhat API response format.
+4. Da tao branch cho tung thanh vien.
+5. Da thong nhat lich daily standup va lich review.
 
 ---
 
-## Notes
+## Ghi Chu
 
-- **No Blocking**: All tasks are designed to run in parallel
-- **Mock First**: Frontend can use mocks while backend is in progress
-- **Clear Contracts**: Use interface/type definitions for API
-- **Documentation**: Each PR must include API docs or implementation notes
+1. Cac task duoc thiet ke de chay song song, khong block nhau.
+2. FE uu tien mock data trong giai doan API chua hoan tat.
+3. BE4 phu trach DB optimization de tranh bottleneck cuoi sprint.
+4. Moi PR phai cap nhat ghi chu test trong mo ta PR.
 
